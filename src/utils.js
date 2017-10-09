@@ -8,6 +8,7 @@ const loadTexture = (regl, url, opts) => {
     data: img,
     min: 'linear',
     mag: 'linear',
+    flipY: true,
   };
 
   if (opts !== undefined) {
