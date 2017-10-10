@@ -14,7 +14,6 @@ const main = () => {
 };
 
 const start = (err, regl) => {
-  const pr_normal_tex = loadTexture(regl, 'img/puerto-rico-normals-1024.png');
   const pr_height_tex = loadTexture(regl, 'img/puerto-rico-heightmap-1024.png');
   const random_tex = loadTexture(regl, 'img/random.png', {
     min: 'nearest',
@@ -47,7 +46,7 @@ const start = (err, regl) => {
     precision highp float;
 
     uniform sampler2D u_prev_state;
-    uniform sampler2D u_elevation_tex, u_normal_tex;
+    uniform sampler2D u_elevation_tex;
     uniform sampler2D u_random_tex;
     uniform vec2 u_state_size;
     uniform float u_time;
@@ -77,8 +76,6 @@ const start = (err, regl) => {
 
     void main() {
       vec2 aspect_scale = vec2(1.0, u_aspect);
-
-      // vec3 normal = texture2D(u_normal_tex, v_texcoord).xyz * 2.0 - 1.0;
 
       vec4 c = texture2D(u_prev_state, v_texcoord);
 
@@ -129,7 +126,6 @@ const start = (err, regl) => {
 
     uniforms: {
       u_prev_state: ({tick}) => state[tick % 2],
-      u_normal_tex: pr_normal_tex,
       u_elevation_tex: pr_height_tex,
       u_random_tex: random_tex,
       u_state_size: [state_width, state_height],
