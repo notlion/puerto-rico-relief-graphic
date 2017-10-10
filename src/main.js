@@ -154,7 +154,7 @@ const start = (err, regl) => {
     void main() {
       gl_FragColor = texture2D(u_prev_state, v_texcoord);
       vec4 elev = texture2D(u_elevation_tex, v_texcoord);
-      gl_FragColor.rgb = (1.0 - elev.r) * 0.05;
+      gl_FragColor.rgb -= (1.0 - elev.r) * 0.05;
       gl_FragColor *= elev.a;
     }`,
 
