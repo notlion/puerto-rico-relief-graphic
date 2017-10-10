@@ -28,8 +28,9 @@ const start = (err, regl) => {
   const state_inv_aspect_ratio = state_height / state_width;
   const state_pixel_scale = [state_aspect_ratio / state_width, 1.0 / state_height];
 
-  const state = (Array(2)).fill().map(() =>
-    regl.framebuffer({
+  const state = [];
+  for (let i = 0; i < 2; ++i) {
+    state.push(regl.framebuffer({
       color: regl.texture({
         width: 1024,
         height: 512,
@@ -38,8 +39,8 @@ const start = (err, regl) => {
         mag: 'linear',
       }),
       depthStencil: false,
-    })
-  );
+    }));
+  }
 
   const update = regl({
     frag: `
