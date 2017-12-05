@@ -151,7 +151,7 @@ const start = (err, regl) => {
     void main() {
       gl_FragColor = texture2D(u_prev_state, v_texcoord);
       vec4 elev = texture2D(u_elevation_tex, v_texcoord);
-      gl_FragColor.rgb -= (1.0 - elev.r) * 0.05;
+      gl_FragColor.rgb += (1.0 - elev.r) * 0.05;
       gl_FragColor *= elev.a;
     }`,
 
@@ -179,8 +179,9 @@ const start = (err, regl) => {
       u_prev_state: ({tick}) => state[tick % 2],
       u_elevation_tex: pr_height_tex,
       u_transform: ({viewportWidth, viewportHeight}) => {
-        const inv_aspect = viewportHeight / viewportWidth;
-        return mat3.fromScaling([], [1.0, state_inv_aspect_ratio / inv_aspect]);
+        const aspect = viewportWidth / viewportHeight;
+        const scale = mat3.fromScaling([], [state_inv_aspect_ratio / aspect, 1.0]);
+        return mat3.rotate([], scale, Math.PI / 2);
       },
     },
 
